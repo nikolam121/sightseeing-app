@@ -76,7 +76,7 @@ public class FavouriteServiceImpl implements FavouriteService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
-        FavouriteDto favouriteDto = new FavouriteDto(locationMapper.toDto(locationRepository.getByName(location)), attractionName);
+        FavouriteDto favouriteDto = new FavouriteDto(locationMapper.toDto(locationRepository.getByName(location)).name(), attractionName);
         Favourite favourite = favouriteMapper.toEntity(favouriteDto);
         favourite.setUser(userRepository.getById(userId));
         Favourite savedFavourite = favouriteRepository.save(favourite);
