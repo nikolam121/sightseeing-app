@@ -1,7 +1,7 @@
 
-package hr.tis.academy.dto;
+package hr.tis.academy.sightseeingapp.dto;
 
-import hr.tis.academy.enums.Type;
+import hr.tis.academy.sightseeingapp.enums.Type;
 
 
 public record attraction (
