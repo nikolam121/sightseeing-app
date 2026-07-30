@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,26 +32,34 @@ public class UserController {
 
     @Operation(summary = "post")
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@RequestParam(name = "name") String name, @RequestParam(name = "email") String email) {
-        return userService.save(name, email);
+    public ResponseEntity<UserDto> createUser(@RequestParam(name = "name") String name,
+                                              @RequestParam(name = "email") String email,
+                                              @RequestParam(required = false, name = "phoneNumer") String phoneNumber,
+                                              @RequestParam(required = false, name = "dateOfBirth") LocalDate dateOfBirth,
+                                              @RequestParam(required = false, name = "country") String country,
+                                              @RequestParam(required = false, name = "city") String city,
+                                              @RequestParam(required = false, name = "streetName") String streetName,
+                                              @RequestParam(required = false, name = "houseNumber") String houseNumber
+                                              ) {
+        return userService.save(name, email, phoneNumber, dateOfBirth, country, city, streetName, houseNumber);
     }
 
     @Operation(summary = "post")
     @PostMapping("/{userId}/favourites")
-    public ResponseEntity<FavouriteDto> createFavourite(@PathVariable UUID userId, @RequestParam(name = "location") String location, @RequestParam(name = "attractionName") String attractionName) {
+    public ResponseEntity<FavouriteDto> createFavourite(@PathVariable Long userId, @RequestParam(name = "location") String location, @RequestParam(name = "attractionName") String attractionName) {
         return favouriteService.save(userId, location, attractionName);
     }
 
     @Operation(summary = "get")
     @GetMapping("/{userId}/favourites")
-    public ResponseEntity<List<FavouriteDto>> getFavouritesByUserId(@PathVariable UUID userId) {
+    public ResponseEntity<List<FavouriteDto>> getFavouritesByUserId(@PathVariable Long userId) {
         List<FavouriteDto> favourites = userService.getFavouritesByUserId(userId);
         return ResponseEntity.ok(favourites);
     }
 
     @Operation(summary = "get")
     @GetMapping("/{userId}")
-    public ResponseEntity<UserDto> getUser(@PathVariable UUID userId) {
+    public ResponseEntity<UserDto> getUser(@PathVariable Long userId) {
         return userService.getById(userId);
     }
 }

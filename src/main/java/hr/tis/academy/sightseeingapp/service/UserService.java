@@ -5,12 +5,20 @@ import hr.tis.academy.sightseeingapp.dto.UserDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
 @Component
 public interface UserService {
-    ResponseEntity<UserDto> save(String name, String email);
-    List<FavouriteDto> getFavouritesByUserId(UUID userId);
-    ResponseEntity<UserDto> getById(UUID userId);
+    ResponseEntity<UserDto> save(String name,
+                                 String email,
+                                 String phoneNumber,
+                                 LocalDate dateOfBirth,
+                                 String country,
+                                 String city,
+                                 String streetName,
+                                 String houseNumber);
+    List<FavouriteDto> getFavouritesByUserId(Long userId);
+    ResponseEntity<UserDto> getById(Long userId);
 }

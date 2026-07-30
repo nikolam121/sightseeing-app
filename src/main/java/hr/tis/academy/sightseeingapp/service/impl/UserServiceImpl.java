@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
@@ -33,7 +34,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public ResponseEntity<UserDto> save(String name, String email) {
+    public ResponseEntity<UserDto> save(String name,
+                                        String email,
+                                        String phoneNumber,
+                                        LocalDate dateOfBirth,
+                                        String country,
+                                        String city,
+                                        String streetName,
+                                        String houseNumber) {
         if (name == null) {
             HttpHeaders headers = new HttpHeaders();
             headers.set("message", "Name cannot be empty");
@@ -48,7 +56,7 @@ public class UserServiceImpl implements UserService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).headers(headers).body(null);
         }
 
-
+        //TODO dodat sva polja
         if (!userRepository.existsByEmail(email)) {
             UserDto userDto = new UserDto(name, email);
             User userEntity = userMapper.toEntity(userDto);
@@ -70,7 +78,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<UserDto> getById(UUID userId) {
+    public ResponseEntity<UserDto> getById(Long userId) {
         if (!userRepository.existsById(userId)) {
             HttpHeaders headers = new HttpHeaders();
             headers.set("message", "User not found: " + userId);
@@ -83,7 +91,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<FavouriteDto> getFavouritesByUserId(UUID userId) {
+    public List<FavouriteDto> getFavouritesByUserId(Long userId) {
         return favouriteRepository.findAllByUserId(userId)
                 .stream()
                 .map(favourite -> new FavouriteDto(

@@ -10,6 +10,6 @@ import java.util.UUID;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     boolean existsByEmail(String email);
-    boolean existsById(UUID uuid);
-    User getById(UUID uuid);
+    boolean existsById(Long id);
+    User getById(Long id);
 }

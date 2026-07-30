@@ -11,8 +11,8 @@ import java.util.UUID;
 @Table(name = "USERS", schema = "SIGHTSEEING")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NotNull
     @Column
@@ -37,11 +37,11 @@ public class User {
 
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
