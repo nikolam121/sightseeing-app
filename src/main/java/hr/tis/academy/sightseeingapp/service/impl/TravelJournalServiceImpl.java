@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -47,15 +48,16 @@ public class TravelJournalServiceImpl implements TravelJournalService {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).body(null);
         }
 
-        boolean exists = false;
+        boolean allExist = true;
         List<AttractionJournalMetadataDto> temp = travelJournalDto.attractions();
         for (AttractionJournalMetadataDto a : temp) {
-            if (attractionRepository.existsByName(a.attractionName())) {
-                exists = true;
+            if (!attractionRepository.existsByName(a.attraction())) {
+                allExist = false;
+                break;
             }
         }
 
-        if (!exists) {
+        if (!allExist) {
             HttpHeaders headers = new HttpHeaders();
             headers.set("message", "Attraction does not exist.");
             headers.set("timestamp", LocalTime.now().toString());
@@ -63,7 +65,13 @@ public class TravelJournalServiceImpl implements TravelJournalService {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).body(null);
         }
 
-        //TODO: ako nedostaje neko od polja u ulaznom JSONU
+        if (travelJournalDto.description() == null || travelJournalDto.description().isEmpty() || travelJournalDto.startDate() == null) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("message", "All fields except endDate are mandatory.");
+            headers.set("timestamp", LocalTime.now().toString());
+            headers.set("uuid", UUID.randomUUID().toString());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).headers(headers).body(null);
+        }
 
         TravelJournal travelJournal = travelJournalMapper.toEntity(travelJournalDto);
         travelJournal.setUser(userRepository.getById(userId));
@@ -76,14 +84,19 @@ public class TravelJournalServiceImpl implements TravelJournalService {
         return ResponseEntity.status(HttpStatus.CREATED).headers(headers).body(travelJournalMapper.toDto(savedTravelJournal));
     }
 
-    //TODO: napisati exception
     @Override
+    @Transactional
     public ResponseEntity<Void> modify(Long travelJournalId, TravelJournalDto patchDto) {
         if (!travelJournalRepository.existsById(travelJournalId)) {
-            return ResponseEntity.notFound().build();
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("message", "Travel journal does not exist: " + travelJournalId);
+            headers.set("timestamp", LocalTime.now().toString());
+            headers.set("uuid", UUID.randomUUID().toString());
+            return ResponseEntity.notFound().headers(headers).build();
         } else {
             TravelJournal existingTravelJournal = travelJournalRepository.getById(travelJournalId);
             TravelJournalDto existingDto = travelJournalMapper.toDto(existingTravelJournal);
+
 
             TravelJournalDto newDto = new TravelJournalDto(
                     Objects.requireNonNullElse(patchDto.startDate(), existingDto.startDate()),
@@ -106,6 +119,7 @@ public class TravelJournalServiceImpl implements TravelJournalService {
             HttpHeaders headers = new HttpHeaders();
             headers.set("message", "Travel journal not found: " + travelJournalId);
             headers.set("timestamp", LocalTime.now().toString());
+            headers.set("uuid", UUID.randomUUID().toString());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).body(null);
         }
 
