@@ -1,0 +1,63 @@
+GET http://localhost:9090/sightseeing-app/attractions/zabok
+Accept: application/json
+
+###
+
+GET http://localhost:9090/sightseeing-app/attractions
+Accept: application/json
+
+###
+
+POST http://localhost:9090/sightseeing-app/attractions
+Content-Type: application/json
+
+{
+  "location": "Zabok",
+  "attractions": [
+    {
+      "name": "Muzej Mimara",
+      "description": "Umjetnički muzej u Zagrebu",
+      "type": "Muzej"
+    },
+{
+  "name": "Muzej masne kite",
+  "description": "Umjetnički muzej u Zagrebu",
+  "type": "Muzej"
+}]
+}
+###
+
+PUT http://localhost:9090/product_manager_mljet/stores/1
+Content-Type: application/json
+
+{
+  "storeName": "7-Eleven Premium",
+  "address": {
+    "city": "New York",
+    "country": "USA",
+    "streetName": "Broadway",
+    "houseNumber": "100"
+  },
+  "telephoneNumber": "+01-999-888-777",
+  "email": "premium@7eleven.com",
+  "workingDays": [
+    {
+      "dayOfWeek": "MONDAY",
+      "startTime": "08:00:00",
+      "endTime": "17:00:00"
+    }
+  ]
+}
+
+###
+
+PATCH http://localhost:9090/product_manager_mljet/stores/1
+Content-Type: application/json
+
+{
+  "email": "novi-email@domain.com"
+}
+
+###
+
+DELETE http://localhost:9090/product_manager_mljet/stores/1
