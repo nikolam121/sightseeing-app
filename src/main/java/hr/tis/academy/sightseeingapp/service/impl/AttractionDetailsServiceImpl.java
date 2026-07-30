@@ -9,12 +9,15 @@ import hr.tis.academy.sightseeingapp.model.Review;
 import hr.tis.academy.sightseeingapp.repository.AttractionMetadataRepository;
 import hr.tis.academy.sightseeingapp.repository.ReviewRepository;
 import hr.tis.academy.sightseeingapp.service.AttractionDetailsService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class AttractionDetailsServiceImpl implements AttractionDetailsService {
@@ -40,18 +43,28 @@ public class AttractionDetailsServiceImpl implements AttractionDetailsService {
         List<Review> reviewList;
         AttractionDetailsDto attractionDetailsDto = null;
 
-        if (!attractionList.isEmpty()) {
-            for (Attraction a : attractionList) {
-                if (a.getUrlName().equals(attractionURLName)) {
-                    reviewList = reviewRepository.findByAttraction(a);
-                    BigDecimal sum = reviewList.stream().map(Review::getRating).reduce(BigDecimal.ZERO, BigDecimal::add);
-                    BigDecimal avg = sum.divide(BigDecimal.valueOf(reviewList.size()));
-                    attractionDetailsDto = new AttractionDetailsDto(a.getName(), a.getDescription(), a.getType(), avg, reviewMapper.toDto(reviewList));
-                }
-            }
-            return ResponseEntity.status(HttpStatus.OK).body(attractionDetailsDto);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        boolean exists = attractionList.stream().anyMatch(at -> at.getName().equals(attractionURLName));
+
+        if (!exists) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("message", "Attraction does not exist.");
+            headers.add("timestamp", LocalTime.now().toString());
+            headers.add("uuid",  UUID.randomUUID().toString());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).body(null);
         }
+
+        for (Attraction a : attractionList) {
+            if (a.getUrlName().equals(attractionURLName)) {
+                reviewList = reviewRepository.findByAttraction(a);
+                BigDecimal sum = reviewList.stream().map(Review::getRating).reduce(BigDecimal.ZERO, BigDecimal::add);
+                BigDecimal avg = sum.divide(BigDecimal.valueOf(reviewList.size()));
+                attractionDetailsDto = new AttractionDetailsDto(a.getName(), a.getDescription(), a.getType(), avg, reviewMapper.toDto(reviewList));
+            }
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("message", "Favourite created successfully.");
+        headers.add("timestamp", LocalTime.now().toString());
+        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(attractionDetailsDto);
+
     }
 }

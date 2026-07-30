@@ -3,6 +3,7 @@ package hr.tis.academy.sightseeingapp.service.impl;
 import hr.tis.academy.sightseeingapp.dto.AddressDto;
 import hr.tis.academy.sightseeingapp.dto.FavouriteDto;
 import hr.tis.academy.sightseeingapp.dto.UserDto;
+import hr.tis.academy.sightseeingapp.mapper.FavouriteMapper;
 import hr.tis.academy.sightseeingapp.mapper.LocationMapper;
 import hr.tis.academy.sightseeingapp.mapper.UserMapper;
 import hr.tis.academy.sightseeingapp.model.User;
@@ -10,6 +11,7 @@ import hr.tis.academy.sightseeingapp.repository.FavouriteRepository;
 import hr.tis.academy.sightseeingapp.repository.UserRepository;
 import hr.tis.academy.sightseeingapp.service.UserService;
 import jakarta.validation.ConstraintViolationException;
+import org.springframework.boot.micrometer.observation.autoconfigure.ObservationProperties;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,12 +32,14 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final FavouriteRepository favouriteRepository;
     private final LocationMapper locationMapper;
+    private final FavouriteMapper favouriteMapper;
 
-    public UserServiceImpl(UserMapper userMapper, UserRepository userRepository, FavouriteRepository favouriteRepository, LocationMapper locationMapper) {
+    public UserServiceImpl(UserMapper userMapper, UserRepository userRepository, FavouriteRepository favouriteRepository, LocationMapper locationMapper, FavouriteMapper favouriteMapper) {
         this.userMapper = userMapper;
         this.userRepository = userRepository;
         this.favouriteRepository = favouriteRepository;
         this.locationMapper = locationMapper;
+        this.favouriteMapper = favouriteMapper;
     }
 
 
@@ -114,13 +118,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<FavouriteDto> getFavouritesByUserId(Long userId) {
-        return favouriteRepository.findAllByUserId(userId)
-                .stream()
-                .map(favourite -> new FavouriteDto(
-                        locationMapper.toDto(favourite.getLocation()),
-                        favourite.getAttraction().getName()
-                ))
-                .toList();
+    public ResponseEntity<List<FavouriteDto>> getFavouritesByUserId(Long userId) {
+        if (!userRepository.existsById(userId)) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("message", "User not found: " + userId);
+            headers.set("timestamp", LocalTime.now().toString());
+            headers.set("uuid",  UUID.randomUUID().toString());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).body(null);
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("timestamp", LocalTime.now().toString());
+        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(favouriteMapper.toDto(favouriteRepository.findAllByUserId(userId)));
     }
 }
