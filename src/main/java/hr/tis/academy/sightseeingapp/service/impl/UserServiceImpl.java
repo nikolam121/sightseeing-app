@@ -73,6 +73,17 @@ public class UserServiceImpl implements UserService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).headers(headers).body(null);
         }
 
+        String countryCodeRegex = "^[a-zA-Z]{2}$";
+        Pattern countryPattern = Pattern.compile(countryCodeRegex, Pattern.CASE_INSENSITIVE);
+        if (!countryPattern.matcher(country).matches()) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("message", "Country code is of the wrong format.");
+            headers.set("timestamp", LocalTime.now().toString());
+            headers.set("uuid",  UUID.randomUUID().toString());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).headers(headers).body(null);
+        }
+
+
         if (!userRepository.existsByEmail(email)) {
             UserDto userDto = new UserDto(name, email, phoneNumber, dateOfBirth, new AddressDto(country, city, streetName, houseNumber));
             User userEntity = userMapper.toEntity(userDto);
