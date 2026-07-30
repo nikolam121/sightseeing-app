@@ -18,6 +18,10 @@ public class Review {
     @JoinColumn(name = "ATTRACTION_ID")
     private Attraction attraction;
 
+    @ManyToOne
+    @JoinColumn(name = "LOCATION_ID")
+    private Location location;
+
     @Column
     private LocalDateTime timestamp;
 
@@ -28,6 +32,14 @@ public class Review {
     private String reviewText;
 
     public Review() {
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public Long getId() {

@@ -27,15 +27,14 @@ public class AttractionMetadataServiceImpl implements AttractionMetadataService 
     }
 
     @Override
-    public List<AttractionMetadataDto> findByLocation(String location) {
-        List<AttractionMetadata> attractionMetadata = attractionMetadataRepository.findByLocation(location);
+    public AttractionMetadataDto findByLocation(String location) {
+        AttractionMetadata attractionMetadata = attractionMetadataRepository.findByLocation(location);
 
-        if (attractionMetadata.isEmpty()) {
+        if (attractionMetadata == null) {
             throw new NoAttractionFoundException("No Attraction with localtion " + location);
         }
-        return attractionMetadata.stream()
-                .map(attractionMetadataMapper::toDto)
-                .toList();
+
+        return attractionMetadataMapper.toDto(attractionMetadata);
     }
 
     @Override
