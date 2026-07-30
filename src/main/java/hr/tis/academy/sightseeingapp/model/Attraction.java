@@ -17,10 +17,12 @@ public class Attraction {
     @Column
     private String description;
 
-
     @Enumerated(EnumType.STRING)
     private Type type;
+/*   OBRISATI KOD IMPLEMENTACIJE URLNAME
 
+    @Column
+    private String attractionUrlName; */
 
     public Attraction() {}
 
@@ -55,4 +57,12 @@ public class Attraction {
     public void setType(Type type) {
         this.type = type;
     }
+/*
+    public String getAttractionUrlName() {
+        return attractionUrlName;
+    }
+
+    public void setAttractionUrlName(String attractionUrlName) {
+        this.attractionUrlName = attractionUrlName;
+    } */
 }
