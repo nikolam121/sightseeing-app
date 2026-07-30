@@ -8,12 +8,12 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface AttractionJournalMetadataMapper {
-    @Mapping(source = "location.name", target = "locationName")
-    @Mapping(source = "attraction.name", target = "attractionName")
+    @Mapping(source = "location.name", target = "location")
+    @Mapping(source = "attraction.name", target = "attraction")
     AttractionJournalMetadataDto toDto(AttractionJournalMetadata attractionJournalMetadata);
 
     @Mapping(ignore = true, target = "id")
-    @Mapping(source = "locationName", target = "location.name")
-    @Mapping(source = "attractionName", target = "attraction.name")
+    @Mapping(source = "location", target = "location.name")
+    @Mapping(source = "attraction", target = "attraction.name")
     AttractionJournalMetadata toEntity(AttractionJournalMetadataDto attractionJournalMetadataDto);
 }
