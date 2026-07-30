@@ -1,8 +1,10 @@
 package hr.tis.academy.sightseeingapp.service.impl;
 
+import hr.tis.academy.sightseeingapp.dto.FavouriteDto;
 import hr.tis.academy.sightseeingapp.dto.UserDto;
 import hr.tis.academy.sightseeingapp.mapper.UserMapper;
 import hr.tis.academy.sightseeingapp.model.User;
+import hr.tis.academy.sightseeingapp.repository.FavouriteRepository;
 import hr.tis.academy.sightseeingapp.repository.UserRepository;
 import hr.tis.academy.sightseeingapp.service.UserService;
 import org.springframework.http.HttpHeaders;
@@ -12,16 +14,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalTime;
+import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private UserMapper userMapper;
     private UserRepository userRepository;
+    private final FavouriteRepository favouriteRepository;
 
-    public UserServiceImpl(UserMapper userMapper, UserRepository userRepository) {
+    public UserServiceImpl(UserMapper userMapper, UserRepository userRepository, FavouriteRepository favouriteRepository) {
         this.userMapper = userMapper;
         this.userRepository = userRepository;
+        this.favouriteRepository = favouriteRepository;
     }
 
 
@@ -61,5 +67,17 @@ public class UserServiceImpl implements UserService {
             headers.set("timestamp", LocalTime.now().toString());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).headers(headers).body(null);
         }
+    }
+
+    @Override
+    public List<FavouriteDto> getFavouritesByUserId(UUID userId) {
+        return favouriteRepository.findAllByUserId(userId)
+                .stream()
+                .map(favourite -> new FavouriteDto(
+                        favourite.getLocation().getName(),
+                        favourite.getAttraction().getName(),
+                        null
+                ))
+                .toList();
     }
 }
