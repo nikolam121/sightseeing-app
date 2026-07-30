@@ -10,4 +10,5 @@ import java.util.UUID;
 public interface TravelJournalService {
     ResponseEntity<TravelJournalDto> save(UUID userId, TravelJournalDto travelJournalDto);
     ResponseEntity<Void> modify(Long travelJournalId, TravelJournalDto patchDto);
+    ResponseEntity<TravelJournalDto> getById(Long travelJournalId);
 }

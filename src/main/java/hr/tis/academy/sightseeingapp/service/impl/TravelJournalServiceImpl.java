@@ -75,4 +75,17 @@ public class TravelJournalServiceImpl implements TravelJournalService {
             return ResponseEntity.ok().build();
         }
     }
+
+    @Override
+    public ResponseEntity<TravelJournalDto> getById(Long travelJournalId) {
+        if (!travelJournalRepository.existsById(travelJournalId)) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("message", "Travel journal not found: " + travelJournalId);
+            headers.set("timestamp", LocalTime.now().toString());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).body(null);
+        }
+
+        TravelJournal travelJournal = travelJournalRepository.getById(travelJournalId);
+        return ResponseEntity.ok(travelJournalMapper.toDto(travelJournal));
+    }
 }
