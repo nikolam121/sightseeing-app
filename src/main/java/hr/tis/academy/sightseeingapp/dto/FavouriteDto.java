@@ -1,7 +1,7 @@
 package hr.tis.academy.sightseeingapp.dto;
 
 public record FavouriteDto (
-    String location,
+    LocationDto location,
     String attractionName,
     UserDto userDto
 ) {

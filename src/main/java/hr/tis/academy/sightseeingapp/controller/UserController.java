@@ -34,7 +34,7 @@ public class UserController {
     @PostMapping
     public ResponseEntity<UserDto> createUser(@RequestParam(name = "name") String name,
                                               @RequestParam(name = "email") String email,
-                                              @RequestParam(required = false, name = "phoneNumer") String phoneNumber,
+                                              @RequestParam(required = false, name = "phoneNumber") String phoneNumber,
                                               @RequestParam(required = false, name = "dateOfBirth") LocalDate dateOfBirth,
                                               @RequestParam(required = false, name = "country") String country,
                                               @RequestParam(required = false, name = "city") String city,
