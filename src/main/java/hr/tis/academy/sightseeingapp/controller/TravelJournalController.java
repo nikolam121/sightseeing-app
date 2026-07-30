@@ -28,6 +28,9 @@ public class TravelJournalController {
         return travelJournalService.save(userId, travelJournalDto);
     }
 
-
+    @PatchMapping("/{travelJournalId}")
+    public ResponseEntity<Void> modify(@PathVariable("travelJournalId") Long travelJournalId, @RequestBody TravelJournalDto patchDto) {
+        return travelJournalService.modify(travelJournalId, patchDto);
+    }
 
 }
