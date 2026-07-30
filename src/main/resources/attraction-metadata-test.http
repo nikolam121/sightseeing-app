@@ -12,7 +12,7 @@ Content-Type: application/json
   },
   "attractions": [
     {
-      "name": "Muzej masne kite",
+      "name": "Muzej 1",
       "description": "Umjetnički muzej u Zagrebu",
       "type": "MUZEJ"
     }
@@ -31,12 +31,12 @@ Content-Type: application/json
   },
   "attractions": [
     {
-      "name": "Muzej masne kite",
+      "name": "Muzej 2",
       "description": "Umjetnički muzej u Zagrebu",
       "type": "MUZEJ"
     },
     {
-      "name": "Drugi muzej masne kite",
+      "name": "Muzej Ivan",
       "description": "Umjetnički muzej u Zagrebu",
       "type": "MUZEJ"
     }
