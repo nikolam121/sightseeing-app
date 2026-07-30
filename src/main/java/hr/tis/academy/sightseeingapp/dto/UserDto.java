@@ -22,7 +22,7 @@ public class UserDto {
 
         private AddressDto addressDto;
 
-        public UserDto(String name, String email) {
+        public UserDto(String name, String email, String phoneNumber, LocalDate dateOfBirth, AddressDto addressDto) {
             this.name = name;
             this.email = email;
         }

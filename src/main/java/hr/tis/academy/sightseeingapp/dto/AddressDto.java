@@ -4,7 +4,6 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public record AddressDto(
-        Long id,
         @Pattern(regexp = "^[A-Za-z]*$")
         @Size(min = 2, max = 2)
         String country,
