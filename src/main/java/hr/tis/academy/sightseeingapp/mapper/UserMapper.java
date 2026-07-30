@@ -5,7 +5,7 @@ import hr.tis.academy.sightseeingapp.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "string", uses = {AddressMapper.class})
+@Mapper(componentModel = "spring", uses = {AddressMapper.class})
 public interface UserMapper {
     @Mapping(source = "address", target = "addressDto")
     UserDto toDto(User user);

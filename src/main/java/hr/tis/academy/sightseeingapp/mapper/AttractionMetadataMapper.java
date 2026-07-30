@@ -8,8 +8,6 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring", uses = {AttractionMapper.class, LocationMapper.class})
 public interface AttractionMetadataMapper {
-    //@Mapping(source = "location", target = "location")
-    //@Mapping(source = "attractionMetadata.attractions", target = "attractions")
     AttractionMetadataDto toDto(AttractionMetadata attractionMetadata);
 
     @Mapping(ignore = true, target = "id")
