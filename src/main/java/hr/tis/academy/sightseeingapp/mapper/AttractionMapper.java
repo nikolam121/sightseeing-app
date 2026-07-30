@@ -9,8 +9,8 @@ import java.util.List;
 
 @Mapper(componentModel = "spring", uses = {LocationMapper.class})
 public interface AttractionMapper {
-
     AttractionDto toDto(Attraction attraction);
+
     @Mapping(ignore = true, target = "id")
     Attraction toEntity(AttractionDto attractionDto);
 
