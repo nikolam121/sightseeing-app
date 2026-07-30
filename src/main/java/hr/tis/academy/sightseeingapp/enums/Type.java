@@ -1,4 +1,4 @@
-package hr.tis.academy.enums;
+package hr.tis.academy.sightseeingapp.enums;
 
 public enum Type {
     MUZEJ,
