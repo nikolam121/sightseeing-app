@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
@@ -35,7 +36,7 @@ public class AttractionDetailsServiceImpl implements AttractionDetailsService {
     }
 
     @Override
-    public ResponseEntity<AttractionDetailsDto> getAttractionDetailsByLocationAndURLName(String location, String attractionURLName) {
+    public ResponseEntity<AttractionDetailsDto> getAttractionDetailsByLocationAndURLName(String location, String attractionURLName, boolean excludeReviews, LocalDateTime reviewsFrom, LocalDateTime reviewsTo) {
         AttractionMetadata attractionMetadata = attractionMetadataRepository.findByLocation(location);
         List<Attraction> attractionList = attractionMetadata.getAttractions();
 
@@ -53,16 +54,20 @@ public class AttractionDetailsServiceImpl implements AttractionDetailsService {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).body(null);
         }
 
+
         for (Attraction a : attractionList) {
             if (a.getUrlName().equals(attractionURLName)) {
                 reviewList = reviewRepository.findByAttraction(a);
                 BigDecimal sum = reviewList.stream().map(Review::getRating).reduce(BigDecimal.ZERO, BigDecimal::add);
-                BigDecimal avg = sum.divide(BigDecimal.valueOf(reviewList.size()));
+                BigDecimal avg = BigDecimal.ZERO;
+                if (!reviewList.isEmpty()) {
+                    avg = sum.divide(BigDecimal.valueOf(reviewList.size()));
+                }
+
                 attractionDetailsDto = new AttractionDetailsDto(a.getName(), a.getDescription(), a.getType(), avg, reviewMapper.toDto(reviewList));
             }
         }
         HttpHeaders headers = new HttpHeaders();
-        headers.add("message", "Favourite created successfully.");
         headers.add("timestamp", LocalTime.now().toString());
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(attractionDetailsDto);
 

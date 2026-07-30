@@ -55,7 +55,7 @@ public class AttractionMetadataController {
                                                                   @RequestParam(required = false) boolean excludeReviews,
                                                                   @RequestParam(required = false) LocalDateTime reviewsFrom,
                                                                   @RequestParam(required = false) LocalDateTime reviewsTo) {
-        return attractionDetailsService.getAttractionDetailsByLocationAndURLName(location, attractionURLName);
+        return attractionDetailsService.getAttractionDetailsByLocationAndURLName(location, attractionURLName, excludeReviews, reviewsFrom, reviewsTo);
     }
 }
 
