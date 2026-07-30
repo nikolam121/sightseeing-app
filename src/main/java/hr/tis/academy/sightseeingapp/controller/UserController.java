@@ -7,10 +7,10 @@ import hr.tis.academy.sightseeingapp.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -32,7 +32,7 @@ public class UserController {
     @Operation(summary = "post")
     @PostMapping
     public ResponseEntity<UserDto> createUser(@RequestParam(name = "name") String name, @RequestParam(name = "email") String email) {
-         return userService.save(name, email);
+        return userService.save(name, email);
     }
 
     @Operation(summary = "post")
@@ -41,5 +41,10 @@ public class UserController {
         return favouriteService.save(userId, location, attractionName);
     }
 
-
+    @Operation(summary = "get")
+    @GetMapping("/{userId}/favourites")
+    public ResponseEntity<List<FavouriteDto>> getFavouritesByUserId(@PathVariable UUID userId) {
+        List<FavouriteDto> favourites = userService.getFavouritesByUserId(userId);
+        return ResponseEntity.ok(favourites);
+    }
 }
