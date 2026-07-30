@@ -1,8 +1,11 @@
 package hr.tis.academy.sightseeingapp.service.impl;
 
+import hr.tis.academy.sightseeingapp.dto.AttractionJournalMetadataDto;
 import hr.tis.academy.sightseeingapp.dto.TravelJournalDto;
 import hr.tis.academy.sightseeingapp.mapper.TravelJournalMapper;
+import hr.tis.academy.sightseeingapp.model.AttractionJournalMetadata;
 import hr.tis.academy.sightseeingapp.model.TravelJournal;
+import hr.tis.academy.sightseeingapp.repository.AttractionRepository;
 import hr.tis.academy.sightseeingapp.repository.TravelJournalRepository;
 import hr.tis.academy.sightseeingapp.repository.UserRepository;
 import hr.tis.academy.sightseeingapp.service.TravelJournalService;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -23,11 +27,13 @@ public class TravelJournalServiceImpl implements TravelJournalService {
     private final TravelJournalMapper travelJournalMapper;
     private final TravelJournalRepository travelJournalRepository;
     private final UserRepository userRepository;
+    private final AttractionRepository attractionRepository;
 
-    public TravelJournalServiceImpl(TravelJournalMapper travelJournalMapper, TravelJournalRepository travelJournalRepository, UserRepository userRepository) {
+    public TravelJournalServiceImpl(TravelJournalMapper travelJournalMapper, TravelJournalRepository travelJournalRepository, UserRepository userRepository, AttractionRepository attractionRepository) {
         this.travelJournalMapper = travelJournalMapper;
         this.travelJournalRepository = travelJournalRepository;
         this.userRepository = userRepository;
+        this.attractionRepository = attractionRepository;
     }
 
     @Override
@@ -37,8 +43,26 @@ public class TravelJournalServiceImpl implements TravelJournalService {
             HttpHeaders headers = new HttpHeaders();
             headers.set("message", "User not found: " + userId);
             headers.set("timestamp", LocalTime.now().toString());
+            headers.set("uuid", UUID.randomUUID().toString());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).body(null);
         }
+
+        boolean exists = false;
+        List<AttractionJournalMetadataDto> temp = travelJournalDto.attractions();
+        for (AttractionJournalMetadataDto a : temp) {
+            if (attractionRepository.existsByName(a.attractionName())) {
+                exists = true;
+            }
+        }
+
+        if (!exists) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("message", "Attraction does not exist.");
+            headers.set("timestamp", LocalTime.now().toString());
+            headers.set("uuid", UUID.randomUUID().toString());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).body(null);
+        }
+
         //TODO: ako nedostaje neko od polja u ulaznom JSONU
 
         TravelJournal travelJournal = travelJournalMapper.toEntity(travelJournalDto);

@@ -5,7 +5,7 @@ import hr.tis.academy.sightseeingapp.model.TravelJournal;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {AttractionJournalMetadataMapper.class})
 public interface TravelJournalMapper {
     TravelJournalDto toDto(TravelJournal travelJournal);
 
