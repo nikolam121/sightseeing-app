@@ -1,5 +1,6 @@
 package hr.tis.academy.sightseeingapp.service.impl;
 
+import hr.tis.academy.sightseeingapp.dto.AddressDto;
 import hr.tis.academy.sightseeingapp.dto.FavouriteDto;
 import hr.tis.academy.sightseeingapp.dto.UserDto;
 import hr.tis.academy.sightseeingapp.mapper.UserMapper;
@@ -58,7 +59,7 @@ public class UserServiceImpl implements UserService {
 
         //TODO dodat sva polja
         if (!userRepository.existsByEmail(email)) {
-            UserDto userDto = new UserDto(name, email);
+            UserDto userDto = new UserDto(name, email, phoneNumber, dateOfBirth, new AddressDto(country, city, streetName, houseNumber));
             User userEntity = userMapper.toEntity(userDto);
             User savedUser = userRepository.save(userEntity);
 

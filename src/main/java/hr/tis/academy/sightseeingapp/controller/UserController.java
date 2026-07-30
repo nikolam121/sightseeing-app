@@ -46,7 +46,9 @@ public class UserController {
 
     @Operation(summary = "post")
     @PostMapping("/{userId}/favourites")
-    public ResponseEntity<FavouriteDto> createFavourite(@PathVariable Long userId, @RequestParam(name = "location") String location, @RequestParam(name = "attractionName") String attractionName) {
+    public ResponseEntity<FavouriteDto> createFavourite(@PathVariable Long userId,
+                                                        @RequestParam(name = "location") String location,
+                                                        @RequestParam(name = "attractionName") String attractionName) {
         return favouriteService.save(userId, location, attractionName);
     }
 
