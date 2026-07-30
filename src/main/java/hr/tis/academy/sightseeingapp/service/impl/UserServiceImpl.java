@@ -70,6 +70,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public ResponseEntity<UserDto> getById(UUID userId) {
+        if (!userRepository.existsById(userId)) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("message", "User not found: " + userId);
+            headers.set("timestamp", LocalTime.now().toString());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).body(null);
+        }
+
+        User user = userRepository.getById(userId);
+        return ResponseEntity.ok(userMapper.toDto(user));
+    }
+
+    @Override
     public List<FavouriteDto> getFavouritesByUserId(UUID userId) {
         return favouriteRepository.findAllByUserId(userId)
                 .stream()

@@ -11,4 +11,6 @@ import java.util.UUID;
 @Component
 public interface UserService {
     ResponseEntity<UserDto> save(String name, String email);
-    List<FavouriteDto> getFavouritesByUserId(UUID userId);}
+    List<FavouriteDto> getFavouritesByUserId(UUID userId);
+    ResponseEntity<UserDto> getById(UUID userId);
+}
