@@ -9,6 +9,6 @@ import java.util.List;
 
 @Component
 public interface AttractionMetadataService {
-    List<AttractionMetadataDto> findByLocation(String location);
+    AttractionMetadataDto findByLocation(String location);
     AttractionMetadataDto save(AttractionMetadataDto attractionMetadataDto);
 }

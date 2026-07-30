@@ -40,4 +40,6 @@ public class UserController {
     public ResponseEntity<FavouriteDto> createFavourite(@PathVariable UUID userId, @RequestParam(name = "location") String location, @RequestParam(name = "attractionName") String attractionName) {
         return favouriteService.save(userId, location, attractionName);
     }
+
+
 }

@@ -46,17 +46,16 @@ public class ReviewServiceImpl implements ReviewService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).headers(headers).body(null);
         }
 
-        List<AttractionMetadata> metadataList = attractionMetadataRepository.findByLocation(request.location());
+        AttractionMetadata metadata = attractionMetadataRepository.findByLocation(request.location());
 
         Attraction attraction = null;
-        for (AttractionMetadata metadata : metadataList) {
-            for (Attraction a : metadata.getAttractions()) {
-                if (a.getName().equals(request.attractionName())) {
-                    attraction = a;
-                    break;
-                }
+        for (Attraction a : metadata.getAttractions()) {
+            if (a.getName().equals(request.attractionName())) {
+                attraction = a;
+                break;
             }
         }
+
 
         if (attraction == null) {
             HttpHeaders headers = new HttpHeaders();

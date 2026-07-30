@@ -14,5 +14,5 @@ import java.util.List;
 public interface AttractionMetadataRepository extends JpaRepository<AttractionMetadata, Long> {
     @Query("SELECT am FROM AttractionMetadata am " +
             "WHERE am.location.name LIKE :name")
-    List<AttractionMetadata> findByLocation(@Param("name") String name);
+    AttractionMetadata findByLocation(@Param("name") String name);
 }

@@ -4,6 +4,8 @@ package hr.tis.academy.sightseeingapp.model;
 import hr.tis.academy.sightseeingapp.enums.Type;
 import jakarta.persistence.*;
 
+import java.text.Normalizer;
+
 @Entity
 @Table(name ="ATTRACTION", schema = "SIGHTSEEING")
 public class Attraction {
@@ -19,10 +21,6 @@ public class Attraction {
 
     @Enumerated(EnumType.STRING)
     private Type type;
-/*   OBRISATI KOD IMPLEMENTACIJE URLNAME
-
-    @Column
-    private String attractionUrlName; */
 
     public Attraction() {}
 
@@ -57,12 +55,13 @@ public class Attraction {
     public void setType(Type type) {
         this.type = type;
     }
-/*
-    public String getAttractionUrlName() {
-        return attractionUrlName;
-    }
 
-    public void setAttractionUrlName(String attractionUrlName) {
-        this.attractionUrlName = attractionUrlName;
-    } */
+
+    public String getUrlName() {
+        String normalized = Normalizer.normalize(name, Normalizer.Form.NFD);
+        normalized = normalized.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+        normalized = normalized.replace("đ", "d");
+        normalized = normalized.replace("Đ", "D");
+        return normalized.replaceAll("\\s", "%20");
+    }
 }
