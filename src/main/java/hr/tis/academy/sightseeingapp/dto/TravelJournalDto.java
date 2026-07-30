@@ -10,6 +10,6 @@ public record TravelJournalDto(
         LocalDate startDate,
         LocalDate endDate,
         String description,
-        List<AttractionJournalMetadata> attractions
+        List<AttractionJournalMetadataDto> attractions
 ) {
 }
