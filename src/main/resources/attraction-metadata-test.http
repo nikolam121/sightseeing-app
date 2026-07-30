@@ -42,7 +42,24 @@ Content-Type: application/json
     }
   ]
 }
+###
+DELETE http://localhost:9090/sightseeing-app/attractions/Zagreb
 
 ###
 
-DELETE http://localhost:9090/sightseeing-app/attractions/Zagreb
+POST http://localhost:9090/sightseeing-app/user
+Content-Type: application/json
+
+{
+  "name": "Nikola Gordan",
+  "email": "ngordan@tis.hr",
+  "phoneNumber": "+385911234567",
+  "dateOfBirth": "1980-12-01",
+  "address": {
+    "country": "HR",
+    "city": "Split",
+    "streetName": "Ljudevita Gaja",
+    "houseNumber": "15A"
+  }
+}
+
