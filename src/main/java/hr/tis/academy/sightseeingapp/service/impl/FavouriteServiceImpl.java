@@ -37,7 +37,7 @@ public class FavouriteServiceImpl implements FavouriteService {
 
     @Override
     @Transactional
-    public ResponseEntity<FavouriteDto> save(UUID userId, String location, String attractionName) {
+    public ResponseEntity<FavouriteDto> save(Long userId, String location, String attractionName) {
         if (!locationRepository.existsByName(location)) {
             HttpHeaders headers = new HttpHeaders();
             headers.add("message", "Location does not exist.");

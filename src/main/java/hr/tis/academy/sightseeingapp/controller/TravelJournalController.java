@@ -24,7 +24,7 @@ public class TravelJournalController {
 
     @Operation(summary = "post")
     @PostMapping("/{userId}")
-    public ResponseEntity<TravelJournalDto> createTravelJournal(@PathVariable("userId") UUID userId, @RequestBody TravelJournalDto travelJournalDto) {
+    public ResponseEntity<TravelJournalDto> createTravelJournal(@PathVariable("userId") Long userId, @RequestBody TravelJournalDto travelJournalDto) {
         return travelJournalService.save(userId, travelJournalDto);
     }
 

@@ -32,7 +32,7 @@ public class TravelJournalServiceImpl implements TravelJournalService {
 
     @Override
     @Transactional
-    public ResponseEntity<TravelJournalDto> save(UUID userId, TravelJournalDto travelJournalDto) {
+    public ResponseEntity<TravelJournalDto> save(Long userId, TravelJournalDto travelJournalDto) {
         if (!userRepository.existsById(userId)) {
             HttpHeaders headers = new HttpHeaders();
             headers.set("message", "User not found: " + userId);

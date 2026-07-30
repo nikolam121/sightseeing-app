@@ -8,12 +8,9 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public class UserDto {
-        private UUID id;
-
         @NotNull
         private String name;
 
-        //eventualno maknut @Column
         @NotNull
         @Email
         @Column(unique = true)
@@ -28,14 +25,6 @@ public class UserDto {
         public UserDto(String name, String email) {
             this.name = name;
             this.email = email;
-        }
-
-        public UUID getId() {
-                return id;
-        }
-
-        public void setId(UUID id) {
-                this.id = id;
         }
 
         public String getName() {

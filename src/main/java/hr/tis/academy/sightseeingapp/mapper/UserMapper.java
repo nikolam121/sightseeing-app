@@ -14,5 +14,4 @@ public interface UserMapper {
     @Mapping(source = "addressDto", target = "address")
     User toEntity(UserDto userDto);
 
-    //ako ne bude radilo samo zamijeniti source i target na oba mappinga
 }
