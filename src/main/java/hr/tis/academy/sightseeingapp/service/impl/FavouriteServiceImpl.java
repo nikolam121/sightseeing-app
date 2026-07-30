@@ -55,15 +55,16 @@ public class FavouriteServiceImpl implements FavouriteService {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).body(null);
         }
 
-        if (favouriteRepository.existsByLocationAndAttractionName(location, attractionName)) {
+        if (favouriteRepository.existsByLocationAndAttractionName(locationRepository.getByName(location), attractionName)) {
             HttpHeaders headers = new HttpHeaders();
             headers.add("message", "Attraction already exists as a favourite.");
             headers.add("timestamp", LocalTime.now().toString());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
-        FavouriteDto favouriteDto = new FavouriteDto(locationMapper.toDto(locationRepository.getByName(location)), attractionName, userMapper.toDto(userRepository.getById(userId)));
+        FavouriteDto favouriteDto = new FavouriteDto(locationMapper.toDto(locationRepository.getByName(location)), attractionName);
         Favourite favourite = favouriteMapper.toEntity(favouriteDto);
+        favourite.setUser(userRepository.getById(userId));
         Favourite savedFavourite = favouriteRepository.save(favourite);
 
         HttpHeaders headers = new HttpHeaders();
