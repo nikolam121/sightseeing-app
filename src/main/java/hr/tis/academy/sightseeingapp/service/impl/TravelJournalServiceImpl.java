@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalTime;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -49,5 +50,29 @@ public class TravelJournalServiceImpl implements TravelJournalService {
         headers.set("timestamp", LocalTime.now().toString());
 
         return ResponseEntity.status(HttpStatus.CREATED).headers(headers).body(travelJournalMapper.toDto(savedTravelJournal));
+    }
+
+    //TODO: napisati exception
+    @Override
+    public ResponseEntity<Void> modify(Long travelJournalId, TravelJournalDto patchDto) {
+        if (!travelJournalRepository.existsById(travelJournalId)) {
+            return ResponseEntity.notFound().build();
+        } else {
+            TravelJournal existingTravelJournal = travelJournalRepository.getById(travelJournalId);
+            TravelJournalDto existingDto = travelJournalMapper.toDto(existingTravelJournal);
+
+            TravelJournalDto newDto = new TravelJournalDto(
+                    Objects.requireNonNullElse(patchDto.startDate(), existingDto.startDate()),
+                    Objects.requireNonNullElse(patchDto.endDate(), existingDto.endDate()),
+                    Objects.requireNonNullElse(patchDto.description(), existingDto.description()),
+                    existingDto.attractions()
+            );
+            newDto.attractions().addAll(patchDto.attractions());
+
+            TravelJournal newTravelJournal = travelJournalMapper.toEntity(newDto);
+            newTravelJournal.setId(travelJournalId);
+            travelJournalRepository.save(newTravelJournal);
+            return ResponseEntity.ok().build();
+        }
     }
 }
