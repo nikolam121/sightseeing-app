@@ -47,4 +47,10 @@ public class UserController {
         List<FavouriteDto> favourites = userService.getFavouritesByUserId(userId);
         return ResponseEntity.ok(favourites);
     }
+
+    @Operation(summary = "get")
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserDto> getUser(@PathVariable UUID userId) {
+        return userService.getById(userId);
+    }
 }
