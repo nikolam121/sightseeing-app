@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;
+import java.util.UUID;
 
 @Service
 public class PictureServiceImpl implements PictureService {
@@ -31,6 +32,7 @@ public class PictureServiceImpl implements PictureService {
             HttpHeaders headers = new HttpHeaders();
             headers.set("message", "Request body must contain an image");
             headers.set("timestamp", LocalTime.now().toString());
+            headers.set("uuid", UUID.randomUUID().toString());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).headers(headers).body(null);
         }
 
@@ -39,6 +41,7 @@ public class PictureServiceImpl implements PictureService {
             HttpHeaders headers = new HttpHeaders();
             headers.set("message", "Location not found: " + location);
             headers.set("timestamp", LocalTime.now().toString());
+            headers.set("uuid", UUID.randomUUID().toString());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).body(null);
         }
 
@@ -54,6 +57,7 @@ public class PictureServiceImpl implements PictureService {
             HttpHeaders headers = new HttpHeaders();
             headers.set("message", "Attraction not found: " + attractionURLName + " in " + location);
             headers.set("timestamp", LocalTime.now().toString());
+            headers.set("uuid", UUID.randomUUID().toString());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).body(null);
         }
 
