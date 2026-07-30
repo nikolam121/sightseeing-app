@@ -7,8 +7,8 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface LocationMapper {
-
     LocationDto toDto(Location location);
+
     @Mapping(ignore = true, target = "id")
     Location toEntity(LocationDto dto);
 }

@@ -7,5 +7,4 @@ import java.util.List;
 public record AttractionMetadataDto(
         LocationDto location,
         List<AttractionDto> attractions
-
 ) {}
