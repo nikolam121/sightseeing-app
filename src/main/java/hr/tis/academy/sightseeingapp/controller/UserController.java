@@ -55,8 +55,7 @@ public class UserController {
     @Operation(summary = "get")
     @GetMapping("/{userId}/favourites")
     public ResponseEntity<List<FavouriteDto>> getFavouritesByUserId(@PathVariable Long userId) {
-        List<FavouriteDto> favourites = userService.getFavouritesByUserId(userId);
-        return ResponseEntity.ok(favourites);
+        return userService.getFavouritesByUserId(userId);
     }
 
     @Operation(summary = "get")

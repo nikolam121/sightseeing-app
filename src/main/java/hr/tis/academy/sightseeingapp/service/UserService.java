@@ -19,6 +19,6 @@ public interface UserService {
                                  String city,
                                  String streetName,
                                  String houseNumber);
-    List<FavouriteDto> getFavouritesByUserId(Long userId);
+    ResponseEntity<List<FavouriteDto>> getFavouritesByUserId(Long userId);
     ResponseEntity<UserDto> getById(Long userId);
 }
