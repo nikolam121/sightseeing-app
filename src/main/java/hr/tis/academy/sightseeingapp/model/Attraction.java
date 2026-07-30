@@ -7,49 +7,22 @@ import jakarta.persistence.*;
 @Entity
 @Table(name ="ATTRACTION", schema = "SIGHTSEEING")
 public class Attraction {
-
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Id
     private Long Id;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "LOCATION_ID")
-    private Location location;
+    @Column
+    private String name;
 
     @Column
-    private String attractionName;
-
-    @Column
-    private String attractionDescription;
+    private String description;
 
 
     @Enumerated(EnumType.STRING)
-    private Type attractionType;
-
-    public Type getAttractionType() {
-        return attractionType;
-    }
-
-    public void setAttractionType(Type attractionType) {
-        this.attractionType = attractionType;
-    }
+    private Type type;
 
 
-    public String getAttractionDescription() {
-        return attractionDescription;
-    }
-
-    public void setAttractionDescription(String attractionDescription) {
-        this.attractionDescription = attractionDescription;
-    }
-
-    public String getAttractionName() {
-        return attractionName;
-    }
-
-    public void setAttractionName(String attractionName) {
-        this.attractionName = attractionName;
-    }
+    public Attraction() {}
 
     public Long getId() {
         return Id;
@@ -59,5 +32,27 @@ public class Attraction {
         Id = id;
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
 }
