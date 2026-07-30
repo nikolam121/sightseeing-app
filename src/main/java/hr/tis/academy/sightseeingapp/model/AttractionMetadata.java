@@ -7,7 +7,7 @@ import java.util.List;
 @Entity
 @Table(name = "ATTRACTION_METADATA", schema = "SIGHTSEEING")
 public class AttractionMetadata {
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
 

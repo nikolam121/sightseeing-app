@@ -47,6 +47,7 @@ public class AttractionMetadataController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedAttractionMetadataDto);
     }
 
+    //TODO: excludeReviews, reviewsFrom, reviewsTo
     @Operation(summary = "get")
     @GetMapping("/{location}/{attractionURLName}")
     public ResponseEntity<AttractionDetailsDto> attractionDetails(@PathVariable("location") String location,
