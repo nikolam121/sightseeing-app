@@ -119,8 +119,7 @@ public class UserServiceImpl implements UserService {
                 .stream()
                 .map(favourite -> new FavouriteDto(
                         locationMapper.toDto(favourite.getLocation()),
-                        favourite.getAttraction().getName(),
-                        userMapper.toDto(userRepository.getById(userId))
+                        favourite.getAttraction().getName()
                 ))
                 .toList();
     }
