@@ -2,8 +2,6 @@ package hr.tis.academy.sightseeingapp.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
 @Table(name = "LOCATION", schema = "SIGHTSEEING")
 public class Location {
@@ -13,16 +11,7 @@ public class Location {
     private Long id;
 
     @Column
-    private String locationName;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "ATTRACTION_ID")
-    private List<Attraction> attraction;
-
-    public Location(Long id, String locationName) {
-        this.id = id;
-        this.locationName = locationName;
-    }
+    private String name;
 
     public Location() {
 
@@ -33,11 +22,11 @@ public class Location {
         return id;
     }
 
-    public String getLocationName() {
-        return locationName;
+    public String getName() {
+        return name;
     }
 
-    public void setLocationName(String locationName) {
-        this.locationName = locationName;
+    public void setName(String name) {
+        this.name = name;
     }
 }
