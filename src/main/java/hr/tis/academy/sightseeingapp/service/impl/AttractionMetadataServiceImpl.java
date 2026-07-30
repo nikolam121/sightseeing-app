@@ -12,6 +12,7 @@ import hr.tis.academy.sightseeingapp.repository.exception.NoAttractionFoundExcep
 import hr.tis.academy.sightseeingapp.service.AttractionMetadataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -35,5 +36,13 @@ public class AttractionMetadataServiceImpl implements AttractionMetadataService 
         return attractionMetadata.stream()
                 .map(attractionMetadataMapper::toDto)
                 .toList();
+    }
+
+    @Override
+    @Transactional
+    public AttractionMetadataDto save(AttractionMetadataDto attractionMetadataDto) {
+        AttractionMetadata attractionMetadataEntity = attractionMetadataMapper.toEntity(attractionMetadataDto);
+        AttractionMetadata savedAttractionMetadata = attractionMetadataRepository.save(attractionMetadataEntity);
+        return attractionMetadataMapper.toDto(savedAttractionMetadata);
     }
 }
