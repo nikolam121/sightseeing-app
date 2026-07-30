@@ -8,6 +8,7 @@ import hr.tis.academy.sightseeingapp.repository.PictureRepository;
 import hr.tis.academy.sightseeingapp.service.PictureService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -66,5 +67,35 @@ public class PictureServiceImpl implements PictureService {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Location", "/attraction/" + location + "/" + attractionURLName + "/picture/" + savedPicture.getId());
         return ResponseEntity.status(HttpStatus.CREATED).headers(headers).body(null);
+    }
+
+    @Override
+    public ResponseEntity<byte[]> getPicture(String location, String attractionURLName, Long pictureId) {
+        AttractionMetadata metadata = attractionMetadataRepository.findByLocation(location);
+        if (metadata == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        Attraction attraction = null;
+        for (Attraction a : metadata.getAttractions()) {
+            if (a.getUrlName().equals(attractionURLName)) {
+                attraction = a;
+                break;
+            }
+        }
+
+        if (attraction == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        Picture picture = pictureRepository.findById(pictureId).orElse(null);
+        if (picture == null || !picture.getAttraction().getId().equals(attraction.getId())) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType(picture.getContentType()));
+
+        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(picture.getData());
     }
 }

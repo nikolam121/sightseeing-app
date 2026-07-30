@@ -27,4 +27,12 @@ public class PictureController {
                                            @RequestBody(required = false) byte[] imageData) {
         return pictureService.addPicture(location, attractionURLName, contentType, imageData);
     }
+
+    @Operation(summary = "get")
+    @GetMapping("/attraction/{location}/{attractionURLName}/picture/{pictureId}")
+    public ResponseEntity<byte[]> getPicture(@PathVariable String location,
+                                             @PathVariable String attractionURLName,
+                                             @PathVariable Long pictureId) {
+        return pictureService.getPicture(location, attractionURLName, pictureId);
+    }
 }
