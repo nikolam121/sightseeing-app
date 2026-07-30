@@ -6,6 +6,7 @@ import hr.tis.academy.sightseeingapp.model.Location;
 import hr.tis.academy.sightseeingapp.service.AttractionMetadataService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,8 @@ import java.util.List;
 @Tag(name = "AttractionMetadataController", description = "AttractionMetadata management")
 @RequestMapping("/attractions")
 public class AttractionMetadataController {
-    private final AttractionMetadataService attractionMetadataService;
+    @Autowired
+    private AttractionMetadataService attractionMetadataService;
 
     public AttractionMetadataController(AttractionMetadataService attractionMetadataService) {
         this.attractionMetadataService = attractionMetadataService;
