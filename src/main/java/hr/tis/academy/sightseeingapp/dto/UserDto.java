@@ -25,6 +25,9 @@ public class UserDto {
         public UserDto(String name, String email, String phoneNumber, LocalDate dateOfBirth, AddressDto addressDto) {
             this.name = name;
             this.email = email;
+            this.phoneNumber = phoneNumber;
+            this.dateOfBirth = dateOfBirth;
+            this.addressDto = addressDto;
         }
 
         public String getName() {
