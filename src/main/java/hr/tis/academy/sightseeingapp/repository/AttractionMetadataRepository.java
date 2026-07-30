@@ -12,8 +12,7 @@ import java.util.List;
 
 @Repository
 public interface AttractionMetadataRepository extends JpaRepository<AttractionMetadata, Long> {
-    //maknut join i samo direktno
     @Query("SELECT am FROM AttractionMetadata am " +
             "WHERE am.location.name LIKE :name")
-    public List<AttractionMetadata> findByLocation(@Param("name") String name);
+    List<AttractionMetadata> findByLocation(@Param("name") String name);
 }

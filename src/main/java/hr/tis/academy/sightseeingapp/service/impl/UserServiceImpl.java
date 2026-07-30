@@ -4,10 +4,7 @@ import hr.tis.academy.sightseeingapp.dto.UserDto;
 import hr.tis.academy.sightseeingapp.mapper.UserMapper;
 import hr.tis.academy.sightseeingapp.model.User;
 import hr.tis.academy.sightseeingapp.repository.UserRepository;
-import hr.tis.academy.sightseeingapp.repository.exception.UserAlreadyExistsException;
 import hr.tis.academy.sightseeingapp.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,7 +59,6 @@ public class UserServiceImpl implements UserService {
             HttpHeaders headers = new HttpHeaders();
             headers.set("message", "Users with this email already exists");
             headers.set("timestamp", LocalTime.now().toString());
-            header.set("UUID", )
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).headers(headers).body(null);
         }
     }
