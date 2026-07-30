@@ -56,12 +56,11 @@ public class Attraction {
         this.type = type;
     }
 
-
     public String getUrlName() {
         String normalized = Normalizer.normalize(name, Normalizer.Form.NFD);
         normalized = normalized.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
         normalized = normalized.replace("đ", "d");
         normalized = normalized.replace("Đ", "D");
-        return normalized.replaceAll("\\s", "%20");
+        return normalized;
     }
 }
