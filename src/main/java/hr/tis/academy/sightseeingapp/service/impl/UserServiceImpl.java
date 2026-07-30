@@ -7,6 +7,7 @@ import hr.tis.academy.sightseeingapp.repository.UserRepository;
 import hr.tis.academy.sightseeingapp.repository.exception.UserAlreadyExistsException;
 import hr.tis.academy.sightseeingapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +45,8 @@ public class UserServiceImpl implements UserService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).headers(headers).body(null);
         }
 
-        try {
+
+        if (!userRepository.existsByEmail(email)) {
             UserDto userDto = new UserDto(name, email);
             User userEntity = userMapper.toEntity(userDto);
             User savedUser = userRepository.save(userEntity);
@@ -56,10 +58,11 @@ public class UserServiceImpl implements UserService {
                     .headers(headers)
                     .body(userMapper.toDto(savedUser));
 
-        } catch (RuntimeException e) {
+        } else {
             HttpHeaders headers = new HttpHeaders();
-            headers.set("message", "Email cannot be empty");
+            headers.set("message", "Users with this email already exists");
             headers.set("timestamp", LocalTime.now().toString());
+            header.set("UUID", )
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).headers(headers).body(null);
         }
     }
