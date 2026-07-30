@@ -62,7 +62,6 @@ public class UserServiceImpl implements UserService {
             HttpHeaders headers = new HttpHeaders();
             headers.set("message", "Users with this email already exists");
             headers.set("timestamp", LocalTime.now().toString());
-            header.set("UUID", )
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).headers(headers).body(null);
         }
     }
