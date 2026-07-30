@@ -1,0 +1,20 @@
+INSERT INTO SIGHTSEEING.LOCATION (id, name) VALUES (1, 'Zagreb');
+INSERT INTO SIGHTSEEING.LOCATION (id, name) VALUES (2, 'Split');
+INSERT INTO SIGHTSEEING.LOCATION (id, name) VALUES (3, 'Zadar');
+
+INSERT INTO SIGHTSEEING.ATTRACTION_METADATA (id, location_id) VALUES (1, 1);
+INSERT INTO SIGHTSEEING.ATTRACTION_METADATA (id, location_id) VALUES (2, 2);
+INSERT INTO SIGHTSEEING.ATTRACTION_METADATA (id, location_id) VALUES (3, 3);
+
+INSERT INTO SIGHTSEEING.ATTRACTION (id, name, description, type, attraction_id)
+VALUES (1, 'Muzej Mimara', 'Umjetnički muzej u Zagrebu', 'MUZEJ', 1);
+
+INSERT INTO SIGHTSEEING.ATTRACTION (id, name, description, type, attraction_id)
+VALUES (2, 'Trg bana Josipa Jelačića', 'Glavni zagrebački trg', 'ULICA', 1);
+
+INSERT INTO SIGHTSEEING.ATTRACTION (id, name, description, type, attraction_id)
+VALUES (3, 'Park Maksimir', 'Veliki park na istoku Zagreba, mjesto za opuštanje', 'PARK', 1);
+
+ALTER TABLE SIGHTSEEING.LOCATION ALTER COLUMN ID RESTART WITH 100;
+ALTER TABLE SIGHTSEEING.ATTRACTION_METADATA ALTER COLUMN ID RESTART WITH 100;
+ALTER TABLE SIGHTSEEING.ATTRACTION ALTER COLUMN ID RESTART WITH 100;

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="hr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Atrakcije</title>
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<h1>Pregled atrakcija</h1>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Mjesto</th>
+        <th>Naziv</th>
+        <th>Opis</th>
+        <th>Tip</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="row : ${attractions}">
+        <td th:text="${row.place}"></td>
+        <td th:text="${row.name}"></td>
+        <td th:text="${row.description}"></td>
+        <td th:text="${row.type}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
