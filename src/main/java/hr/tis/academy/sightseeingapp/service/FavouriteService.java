@@ -9,5 +9,5 @@ import java.util.UUID;
 
 @Component
 public interface FavouriteService {
-    ResponseEntity<FavouriteDto> save(Long userID, String location, String attractionName);
+    ResponseEntity<FavouriteDto> save(Long userId, FavouriteDto favouriteDto);
 }

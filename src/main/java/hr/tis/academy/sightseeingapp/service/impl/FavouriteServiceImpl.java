@@ -40,11 +40,10 @@ public class FavouriteServiceImpl implements FavouriteService {
         this.attractionRepository = attractionRepository;
     }
 
-
     @Override
     @Transactional
-    public ResponseEntity<FavouriteDto> save(Long userId, String location, String attractionName) {
-        if (!locationRepository.existsByName(location)) {
+    public ResponseEntity<FavouriteDto> save(Long userId, FavouriteDto favouriteDto) {
+        if (!locationRepository.existsByName(favouriteDto.location())) {
             HttpHeaders headers = new HttpHeaders();
             headers.add("message", "Location does not exist.");
             headers.add("timestamp", LocalTime.now().toString());
@@ -60,7 +59,7 @@ public class FavouriteServiceImpl implements FavouriteService {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).body(null);
         }
 
-        if (!attractionRepository.existsByName(attractionName)) {
+        if (!attractionRepository.existsByName(favouriteDto.attractionName())) {
             HttpHeaders headers = new HttpHeaders();
             headers.add("message", "Attraction does not exist.");
             headers.add("timestamp", LocalTime.now().toString());
@@ -68,7 +67,7 @@ public class FavouriteServiceImpl implements FavouriteService {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).body(null);
         }
 
-        if (favouriteRepository.existsByLocationAndAttractionName(locationRepository.getByName(location), attractionName)) {
+        if (favouriteRepository.existsByLocationAndAttractionName(locationRepository.getByName(favouriteDto.location()), favouriteDto.attractionName())) {
             HttpHeaders headers = new HttpHeaders();
             headers.add("message", "Attraction already exists as a favourite.");
             headers.add("timestamp", LocalTime.now().toString());
@@ -76,8 +75,8 @@ public class FavouriteServiceImpl implements FavouriteService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
-        FavouriteDto favouriteDto = new FavouriteDto(locationMapper.toDto(locationRepository.getByName(location)).name(), attractionName);
-        Favourite favourite = favouriteMapper.toEntity(favouriteDto);
+        FavouriteDto newFavouriteDto = new FavouriteDto(locationMapper.toDto(locationRepository.getByName(favouriteDto.location())).name(), favouriteDto.attractionName());
+        Favourite favourite = favouriteMapper.toEntity(newFavouriteDto);
         favourite.setUser(userRepository.getById(userId));
         Favourite savedFavourite = favouriteRepository.save(favourite);
 
