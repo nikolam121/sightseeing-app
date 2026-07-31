@@ -32,7 +32,6 @@
         <select id="type" th:field="*{type}">
             <option th:each="t : ${types}" th:value="${t}" th:text="${t}"></option>
         </select>
-        <span th:if="${#fields.hasErrors('type')}" th:errors="*{type}" style="color: red;"></span>
     </div>
 
     <button type="submit">Unesi</button>
