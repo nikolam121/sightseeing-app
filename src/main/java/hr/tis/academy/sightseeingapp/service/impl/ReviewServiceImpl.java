@@ -22,7 +22,8 @@ public class ReviewServiceImpl implements ReviewService {
     private final ReviewRepository reviewRepository;
     private final AttractionMetadataRepository attractionMetadataRepository;
 
-    public ReviewServiceImpl(ReviewRepository reviewRepository, AttractionMetadataRepository attractionMetadataRepository) {
+    public ReviewServiceImpl(ReviewRepository reviewRepository,
+                             AttractionMetadataRepository attractionMetadataRepository) {
         this.reviewRepository = reviewRepository;
         this.attractionMetadataRepository = attractionMetadataRepository;
     }

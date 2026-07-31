@@ -28,7 +28,10 @@ public class AttractionDetailsServiceImpl implements AttractionDetailsService {
     private final AttractionMapper attractionMapper;
     private final ReviewMapper reviewMapper;
 
-    public AttractionDetailsServiceImpl(AttractionMetadataRepository attractionMetadataRepository, ReviewRepository reviewRepository, AttractionMapper attractionMapper, ReviewMapper reviewMapper) {
+    public AttractionDetailsServiceImpl(AttractionMetadataRepository attractionMetadataRepository,
+                                        ReviewRepository reviewRepository,
+                                        AttractionMapper attractionMapper,
+                                        ReviewMapper reviewMapper) {
         this.attractionMetadataRepository = attractionMetadataRepository;
         this.reviewRepository = reviewRepository;
         this.attractionMapper = attractionMapper;

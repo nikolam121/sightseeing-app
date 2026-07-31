@@ -21,7 +21,8 @@ public class PictureServiceImpl implements PictureService {
     private final AttractionMetadataRepository attractionMetadataRepository;
     private final PictureRepository pictureRepository;
 
-    public PictureServiceImpl(AttractionMetadataRepository attractionMetadataRepository, PictureRepository pictureRepository) {
+    public PictureServiceImpl(AttractionMetadataRepository attractionMetadataRepository,
+                              PictureRepository pictureRepository) {
         this.attractionMetadataRepository = attractionMetadataRepository;
         this.pictureRepository = pictureRepository;
     }

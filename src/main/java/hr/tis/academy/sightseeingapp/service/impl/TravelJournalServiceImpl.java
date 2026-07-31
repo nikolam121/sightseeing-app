@@ -30,7 +30,10 @@ public class TravelJournalServiceImpl implements TravelJournalService {
     private final UserRepository userRepository;
     private final AttractionRepository attractionRepository;
 
-    public TravelJournalServiceImpl(TravelJournalMapper travelJournalMapper, TravelJournalRepository travelJournalRepository, UserRepository userRepository, AttractionRepository attractionRepository) {
+    public TravelJournalServiceImpl(TravelJournalMapper travelJournalMapper,
+                                    TravelJournalRepository travelJournalRepository,
+                                    UserRepository userRepository,
+                                    AttractionRepository attractionRepository) {
         this.travelJournalMapper = travelJournalMapper;
         this.travelJournalRepository = travelJournalRepository;
         this.userRepository = userRepository;
