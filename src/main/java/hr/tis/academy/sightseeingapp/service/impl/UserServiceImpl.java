@@ -178,7 +178,7 @@ public class UserServiceImpl implements UserService {
             headers.set("timestamp", localDateTime.toString());
             headers.set("uuid",  uuid.toString());
 
-            httpErrorRepository.save(httpErrorMapper.toEntity(new HttpErrorDto(uuid, localDateTime, message, httpStatus, "POST")));
+            httpErrorRepository.save(httpErrorMapper.toEntity(new HttpErrorDto(uuid, localDateTime, message, httpStatus, "GET")));
             return ResponseEntity.status(httpStatus).headers(headers).body(null);
         }
 
@@ -199,7 +199,7 @@ public class UserServiceImpl implements UserService {
             headers.set("timestamp", localDateTime.toString());
             headers.set("uuid",  uuid.toString());
 
-            httpErrorRepository.save(httpErrorMapper.toEntity(new HttpErrorDto(uuid, localDateTime, message, httpStatus, "POST")));;
+            httpErrorRepository.save(httpErrorMapper.toEntity(new HttpErrorDto(uuid, localDateTime, message, httpStatus, "GET")));;
             return ResponseEntity.status(httpStatus).headers(headers).body(null);
         }
 
