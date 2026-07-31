@@ -19,7 +19,8 @@ public class PictureController {
         this.pictureService = pictureService;
     }
 
-    @Operation(summary = "post")
+
+    @Operation(summary = "post a picture")
     @PostMapping("/attraction/{location}/{attractionURLName}/picture")
     public ResponseEntity<Void> addPicture(@PathVariable String location,
                                            @PathVariable String attractionURLName,
@@ -28,7 +29,7 @@ public class PictureController {
         return pictureService.addPicture(location, attractionURLName, contentType, imageData);
     }
 
-    @Operation(summary = "get")
+    @Operation(summary = "get a picture by location and attraction URL")
     @GetMapping("/attraction/{location}/{attractionURLName}/picture/{pictureId}")
     public ResponseEntity<byte[]> getPicture(@PathVariable String location,
                                              @PathVariable String attractionURLName,

@@ -21,7 +21,7 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
-    @Operation(summary = "post")
+    @Operation(summary = "post a review")
     @PostMapping("/attraction/review")
     public ResponseEntity<Void> addReview(@RequestBody ReviewDto request) {
         return reviewService.addReview(request);

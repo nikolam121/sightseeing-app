@@ -30,7 +30,7 @@ public class UserController {
         this.favouriteService = favouriteService;
     }
 
-    @Operation(summary = "post")
+    @Operation(summary = "post a user")
     @PostMapping
     public ResponseEntity<UserDto> createUser(@RequestParam(name = "name") String name,
                                               @RequestParam(name = "email") String email,
@@ -44,7 +44,7 @@ public class UserController {
         return userService.save(name, email, phoneNumber, dateOfBirth, country, city, streetName, houseNumber);
     }
 
-    @Operation(summary = "post")
+    @Operation(summary = "post a favourite attracton")
     @PostMapping("/{userId}/favourites")
     public ResponseEntity<FavouriteDto> createFavourite(@PathVariable Long userId,
                                                         @RequestBody FavouriteDto favouriteDto) {
@@ -52,13 +52,13 @@ public class UserController {
     }
 
 
-    @Operation(summary = "get")
+    @Operation(summary = "get a favourite attracton")
     @GetMapping("/{userId}/favourites")
     public ResponseEntity<List<FavouriteDto>> getFavouritesByUserId(@PathVariable Long userId) {
         return userService.getFavouritesByUserId(userId);
     }
 
-    @Operation(summary = "get")
+    @Operation(summary = "get a user")
     @GetMapping("/{userId}")
     public ResponseEntity<UserDto> getUser(@PathVariable Long userId) {
         return userService.getById(userId);

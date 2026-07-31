@@ -34,13 +34,13 @@ public class AttractionMetadataController {
         this.attractionDetailsService = attractionDetailsService;
     }
 
-    @Operation(summary = "get")
+    @Operation(summary = "get attractions by location")
     @GetMapping("/{location}")
     public ResponseEntity<AttractionMetadataDto> listAttractions(@PathVariable("location") String location, Model model) {
         return ResponseEntity.ok(attractionMetadataService.findByLocation(location));
     }
 
-    @Operation(summary = "post")
+    @Operation(summary = "post attraction")
     @PostMapping
     public ResponseEntity<AttractionMetadataDto> createAttractionMetadata(@RequestBody AttractionMetadataDto attractionMetadataDto) {
         AttractionMetadataDto savedAttractionMetadataDto = attractionMetadataService.save(attractionMetadataDto);
@@ -48,7 +48,7 @@ public class AttractionMetadataController {
     }
 
     //TODO: excludeReviews, reviewsFrom, reviewsTo
-    @Operation(summary = "get")
+    @Operation(summary = "get attraction details by location and attraction URL")
     @GetMapping("/{location}/{attractionURLName}")
     public ResponseEntity<AttractionDetailsDto> attractionDetails(@PathVariable("location") String location,
                                                                   @PathVariable("attractionURLName") String attractionURLName,

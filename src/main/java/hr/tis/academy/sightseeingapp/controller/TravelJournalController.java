@@ -22,19 +22,20 @@ public class TravelJournalController {
         this.travelJournalService = travelJournalService;
     }
 
-    @Operation(summary = "post")
+    @Operation(summary = "post a travel journal by userId")
     @PostMapping("/{userId}")
     public ResponseEntity<TravelJournalDto> createTravelJournal(@PathVariable("userId") Long userId, @RequestBody TravelJournalDto travelJournalDto) {
         return travelJournalService.save(userId, travelJournalDto);
     }
 
-    @Operation(summary = "patch")
+
+    @Operation(summary = "patch a travel journal by travelJournalId")
     @PatchMapping("/{travelJournalId}")
     public ResponseEntity<Void> modify(@PathVariable("travelJournalId") Long travelJournalId, @RequestBody TravelJournalDto patchDto) {
         return travelJournalService.modify(travelJournalId, patchDto);
     }
 
-    @Operation(summary = "get")
+    @Operation(summary = "get a travel journal by travelJournalId")
     @GetMapping("/{travelJournalId}")
     public ResponseEntity<TravelJournalDto> getById(@PathVariable("travelJournalId") Long travelJournalId) {
         return travelJournalService.getById(travelJournalId);

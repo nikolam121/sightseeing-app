@@ -3,6 +3,7 @@ package hr.tis.academy.sightseeingapp.controller;
 import hr.tis.academy.sightseeingapp.dto.NewAttractionFormDto;
 import hr.tis.academy.sightseeingapp.enums.Type;
 import hr.tis.academy.sightseeingapp.service.AttractionBrowseService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,12 +21,14 @@ public class AttractionViewController {
         this.attractionBrowseService = attractionBrowseService;
     }
 
+    @Operation(summary = "get all attractions")
     @GetMapping("/browse/attractions")
     public String listAttractions(Model model) {
         model.addAttribute("attractions", attractionBrowseService.getAllAttractionRows());
         return "attraction/list";
     }
 
+    @Operation(summary = "get new form")
     @GetMapping("/browse/attractions/new")
     public String showCreateForm(Model model) {
         model.addAttribute("attractionForm", new NewAttractionFormDto());
@@ -33,6 +36,7 @@ public class AttractionViewController {
         return "attraction/form";
     }
 
+    @Operation(summary = "post new form")
     @PostMapping("/browse/attractions/new")
     public String createAttraction(@Valid @ModelAttribute("attractionForm") NewAttractionFormDto attractionForm,
                                    BindingResult bindingResult,
