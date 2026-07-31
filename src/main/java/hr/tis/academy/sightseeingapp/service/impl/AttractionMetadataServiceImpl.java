@@ -21,7 +21,8 @@ public class AttractionMetadataServiceImpl implements AttractionMetadataService 
     private final AttractionMetadataRepository attractionMetadataRepository;
     private final AttractionMetadataMapper attractionMetadataMapper;
 
-    public AttractionMetadataServiceImpl(AttractionMetadataMapper attractionMetadataMapper, AttractionMetadataRepository attractionMetadataRepository) {
+    public AttractionMetadataServiceImpl(AttractionMetadataMapper attractionMetadataMapper,
+                                         AttractionMetadataRepository attractionMetadataRepository) {
         this.attractionMetadataRepository = attractionMetadataRepository;
         this.attractionMetadataMapper = attractionMetadataMapper;
     }

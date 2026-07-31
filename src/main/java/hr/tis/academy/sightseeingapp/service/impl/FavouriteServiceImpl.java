@@ -30,7 +30,13 @@ public class FavouriteServiceImpl implements FavouriteService {
     private final UserMapper userMapper;
     private final AttractionRepository attractionRepository;
 
-    public FavouriteServiceImpl(FavouriteMapper favouriteMapper, FavouriteRepository favouriteRepository, LocationRepository locationRepository, UserRepository userRepository, UserMapper userMapper, LocationMapper locationMapper, AttractionRepository attractionRepository) {
+    public FavouriteServiceImpl(FavouriteMapper favouriteMapper,
+                                FavouriteRepository favouriteRepository,
+                                LocationRepository locationRepository,
+                                UserRepository userRepository,
+                                UserMapper userMapper,
+                                LocationMapper locationMapper,
+                                AttractionRepository attractionRepository) {
         this.favouriteMapper = favouriteMapper;
         this.favouriteRepository = favouriteRepository;
         this.locationRepository = locationRepository;
