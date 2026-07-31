@@ -103,8 +103,8 @@ public class UserServiceImpl implements UserService {
             return ResponseEntity.status(httpStatus).headers(headers).body(null);
         }
 
-        String countryCodeRegex = "^[a-zA-Z]{2}$";
-        Pattern countryPattern = Pattern.compile(countryCodeRegex, Pattern.CASE_INSENSITIVE);
+        String countryCodeRegex = "^[A-Z]{2}$";
+        Pattern countryPattern = Pattern.compile(countryCodeRegex);
         if (!countryPattern.matcher(country).matches()) {
             UUID uuid = UUID.randomUUID();
             LocalDateTime localDateTime = LocalDateTime.now();
