@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Nova atrakcija</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 <div th:replace="~{fragments/navbar :: navbar}"></div>
@@ -10,31 +11,32 @@
 <h1>Unos nove atrakcije</h1>
 
 
-<form th:action="@{/browse/attractions/new}" th:object="${attractionForm}" method="post">
+<form th:action="@{/browse/attractions/new}" th:object="${attractionForm}" method="post" class="form-attraction">
 
-    <div>
-        <label for="place">Mjesto</label>
-        <input type="text" id="place" th:field="*{place}" maxlength="30" />
+    <div class="form-group">
+        <label for="place" class="form-label">Mjesto</label>
+        <input type="text" id="place" th:field="*{place}" maxlength="30" class="form-control" />
     </div>
 
-    <div>
-        <label for="name">Naziv</label>
-        <input type="text" id="name" th:field="*{name}" maxlength="50" />
+    <div class="form-group">
+        <label for="name" class="form-label">Naziv</label>
+        <input type="text" id="name" th:field="*{name}" maxlength="50" class="form-control" />
     </div>
 
-    <div>
-        <label for="description">Opis</label>
-        <textarea id="description" th:field="*{description}" maxlength="250"></textarea>
+    <div class="form-group">
+        <label for="description" class="form-label">Opis</label>
+        <textarea id="description" th:field="*{description}" maxlength="250" class="form-control textarea-control"></textarea>
     </div>
 
-    <div>
-        <label for="type">Tip</label>
-        <select id="type" th:field="*{type}">
+    <div class="form-group">
+        <label for="type" class="form-label">Tip</label>
+        <select id="type" th:field="*{type}" class="form-control">
             <option th:each="t : ${types}" th:value="${t}" th:text="${t}"></option>
         </select>
     </div>
 
-    <button type="submit">Unesi</button>
+    <button type="submit" class="btn btn-submit">Unesi</button>
 </form>
+
 </body>
 </html>

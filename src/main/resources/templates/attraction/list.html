@@ -1,31 +1,42 @@
 <!DOCTYPE html>
-<html lang="hr" xmlns:th="http://www.thymeleaf.org">
+<html lang="hr" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Atrakcije</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
+
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-<h1>Pregled atrakcija</h1>
+<div class="attractions">
+    <h1>Pregled atrakcija</h1>
 
-<table border="1">
-    <thead>
-    <tr>
-        <th>Mjesto</th>
-        <th>Naziv</th>
-        <th>Opis</th>
-        <th>Tip</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="row : ${attractions}">
-        <td th:text="${row.place}"></td>
-        <td th:text="${row.name}"></td>
-        <td th:text="${row.description}"></td>
-        <td th:text="${row.type}"></td>
-    </tr>
-    </tbody>
-</table>
+    <div th:if="${not #lists.isEmpty(attractions)}" class="attractionsTable">
+        <table class="table-attractions">
+            <thead>
+            <tr>
+                <th>Mjesto</th>
+                <th>Naziv</th>
+                <th>Opis</th>
+                <th>Tip</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="row : ${attractions}" class="table-row">
+                <td th:text="${row.place}"></td>
+                <td th:text="${row.name}"></td>
+                <td th:text="${row.description}"></td>
+                <td th:text="${row.type}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:if="${#lists.isEmpty(attractions)}" class="no-data-message">
+        <p>Trenutno nema dostupnih atrakcija u bazi podataka.</p>
+    </div>
+</div>
+
 </body>
 </html>

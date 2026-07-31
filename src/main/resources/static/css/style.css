@@ -1,0 +1,149 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f4f7f6;
+    color: #333;
+    padding: 20px;
+}
+
+
+.main-navbar {
+    background-color: #2c3e50;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.nav-link {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 8px 16px;
+    border-radius: 4px;
+}
+
+.nav-link:hover {
+    background-color: #3498db;
+    color: #ffffff;
+}
+
+.attractions {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.attractionsTable {
+    margin-top: 10px;
+}
+
+.table-attractions {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.table-attractions th {
+    background-color: #3498db;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 14px 16px;
+    font-size: 1rem;
+    text-transform: uppercase;
+}
+
+.table-attractions td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #e0e0e0;
+    color: #555555;
+    font-size: 0.95rem;
+}
+
+.table-row:hover {
+    background-color: #f1f8ff;
+}
+
+.table-row:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.table-row:nth-child(even):hover {
+    background-color: #f1f8ff;
+}
+
+
+.form-attraction {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 8px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 1rem;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    background-color: #ffffff;
+    color: #333333;
+}
+
+.textarea-control {
+    height: 120px;
+    resize: vertical;
+}
+
+
+
+.btn {
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-submit {
+    width: 100%;
+    background-color: #3498db;
+    color: #ffffff;
+    margin-top: 10px;
+}
+
+.btn-submit:hover {
+    background-color: #2980b9;
+}
