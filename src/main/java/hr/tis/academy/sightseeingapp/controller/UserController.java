@@ -47,10 +47,10 @@ public class UserController {
     @Operation(summary = "post")
     @PostMapping("/{userId}/favourites")
     public ResponseEntity<FavouriteDto> createFavourite(@PathVariable Long userId,
-                                                        @RequestParam(name = "location") String location,
-                                                        @RequestParam(name = "attractionName") String attractionName) {
-        return favouriteService.save(userId, location, attractionName);
+                                                        @RequestBody FavouriteDto favouriteDto) {
+        return favouriteService.save(userId, favouriteDto);
     }
+
 
     @Operation(summary = "get")
     @GetMapping("/{userId}/favourites")
