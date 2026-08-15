@@ -10,7 +10,6 @@ import hr.tis.academy.sightseeingapp.model.Location;
 import hr.tis.academy.sightseeingapp.repository.AttractionMetadataRepository;
 import hr.tis.academy.sightseeingapp.repository.exception.NoAttractionFoundException;
 import hr.tis.academy.sightseeingapp.service.AttractionMetadataService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,7 +31,7 @@ public class AttractionMetadataServiceImpl implements AttractionMetadataService 
         AttractionMetadata attractionMetadata = attractionMetadataRepository.findByLocation(location);
 
         if (attractionMetadata == null) {
-            throw new NoAttractionFoundException("No Attraction with localtion " + location);
+            throw new NoAttractionFoundException("No attraction found for location: " + location);
         }
 
         return attractionMetadataMapper.toDto(attractionMetadata);

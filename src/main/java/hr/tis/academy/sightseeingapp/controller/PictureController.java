@@ -3,7 +3,6 @@ package hr.tis.academy.sightseeingapp.controller;
 import hr.tis.academy.sightseeingapp.service.PictureService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,8 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "PictureController", description = "Attraction picture management")
 public class PictureController {
 
-    @Autowired
-    private PictureService pictureService;
+    private final PictureService pictureService;
 
     public PictureController(PictureService pictureService) {
         this.pictureService = pictureService;

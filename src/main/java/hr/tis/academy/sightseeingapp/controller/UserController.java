@@ -6,7 +6,6 @@ import hr.tis.academy.sightseeingapp.service.FavouriteService;
 import hr.tis.academy.sightseeingapp.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,11 +18,9 @@ import java.util.UUID;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private FavouriteService favouriteService;
+    private final FavouriteService favouriteService;
 
     public UserController(UserService userService,  FavouriteService favouriteService) {
         this.userService = userService;

@@ -49,9 +49,16 @@ public class ReviewServiceImpl implements ReviewService {
 
         AttractionMetadata metadata = attractionMetadataRepository.findByLocation(request.location());
 
+        if (metadata == null || metadata.getAttractions() == null) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("message", "Location not found: " + request.location());
+            headers.set("timestamp", LocalTime.now().toString());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).body(null);
+        }
+
         Attraction attraction = null;
         for (Attraction a : metadata.getAttractions()) {
-            if (a.getName().equals(request.attractionName())) {
+            if (request.attractionName().equals(a.getName())) {
                 attraction = a;
                 break;
             }
