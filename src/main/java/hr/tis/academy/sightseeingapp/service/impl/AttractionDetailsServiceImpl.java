@@ -15,13 +15,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class AttractionDetailsServiceImpl implements AttractionDetailsService {
+
+    private static final int RATING_SCALE = 2;
 
     private final AttractionMetadataRepository attractionMetadataRepository;
     private final ReviewRepository reviewRepository;
@@ -39,40 +43,68 @@ public class AttractionDetailsServiceImpl implements AttractionDetailsService {
     }
 
     @Override
-    public ResponseEntity<AttractionDetailsDto> getAttractionDetailsByLocationAndURLName(String location, String attractionURLName, boolean excludeReviews, LocalDateTime reviewsFrom, LocalDateTime reviewsTo) {
+    public ResponseEntity<AttractionDetailsDto> getAttractionDetailsByLocationAndURLName(String location,
+                                                                                        String attractionURLName,
+                                                                                        boolean excludeReviews,
+                                                                                        LocalDateTime reviewsFrom,
+                                                                                        LocalDateTime reviewsTo) {
         AttractionMetadata attractionMetadata = attractionMetadataRepository.findByLocation(location);
-        List<Attraction> attractionList = attractionMetadata.getAttractions();
 
-
-        List<Review> reviewList;
-        AttractionDetailsDto attractionDetailsDto = null;
-
-        boolean exists = attractionList.stream().anyMatch(at -> at.getName().equals(attractionURLName));
-
-        if (!exists) {
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("message", "Attraction does not exist.");
-            headers.add("timestamp", LocalTime.now().toString());
-            headers.add("uuid",  UUID.randomUUID().toString());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).body(null);
+        if (attractionMetadata == null || attractionMetadata.getAttractions() == null) {
+            return notFound("Location does not exist: " + location);
         }
 
+        Optional<Attraction> match = attractionMetadata.getAttractions().stream()
+                .filter(attraction -> attraction.getName() != null)
+                .filter(attraction -> attraction.getUrlName().equals(attractionURLName))
+                .findFirst();
 
-        for (Attraction a : attractionList) {
-            if (a.getUrlName().equals(attractionURLName)) {
-                reviewList = reviewRepository.findByAttraction(a);
-                BigDecimal sum = reviewList.stream().map(Review::getRating).reduce(BigDecimal.ZERO, BigDecimal::add);
-                BigDecimal avg = BigDecimal.ZERO;
-                if (!reviewList.isEmpty()) {
-                    avg = sum.divide(BigDecimal.valueOf(reviewList.size()));
-                }
-
-                attractionDetailsDto = new AttractionDetailsDto(a.getName(), a.getDescription(), a.getType(), avg, reviewMapper.toDto(reviewList));
-            }
+        if (match.isEmpty()) {
+            return notFound("Attraction does not exist: " + attractionURLName);
         }
+
+        Attraction attraction = match.get();
+        List<Review> reviews = filterReviews(reviewRepository.findByAttraction(attraction), reviewsFrom, reviewsTo);
+
+        AttractionDetailsDto attractionDetailsDto = new AttractionDetailsDto(
+                attraction.getName(),
+                attraction.getDescription(),
+                attraction.getType(),
+                averageRating(reviews),
+                excludeReviews ? List.of() : reviewMapper.toDto(reviews)
+        );
+
         HttpHeaders headers = new HttpHeaders();
         headers.add("timestamp", LocalTime.now().toString());
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(attractionDetailsDto);
+    }
 
+    private List<Review> filterReviews(List<Review> reviews, LocalDateTime from, LocalDateTime to) {
+        return reviews.stream()
+                .filter(review -> review.getTimestamp() != null)
+                .filter(review -> from == null || !review.getTimestamp().isBefore(from))
+                .filter(review -> to == null || !review.getTimestamp().isAfter(to))
+                .toList();
+    }
+
+    private BigDecimal averageRating(List<Review> reviews) {
+        if (reviews.isEmpty()) {
+            return BigDecimal.ZERO.setScale(RATING_SCALE, RoundingMode.HALF_UP);
+        }
+
+        BigDecimal sum = reviews.stream()
+                .map(Review::getRating)
+                .filter(rating -> rating != null)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        return sum.divide(BigDecimal.valueOf(reviews.size()), RATING_SCALE, RoundingMode.HALF_UP);
+    }
+
+    private ResponseEntity<AttractionDetailsDto> notFound(String message) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("message", message);
+        headers.add("timestamp", LocalTime.now().toString());
+        headers.add("uuid", UUID.randomUUID().toString());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).body(null);
     }
 }

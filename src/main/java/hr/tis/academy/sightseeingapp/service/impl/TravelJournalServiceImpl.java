@@ -52,7 +52,7 @@ public class TravelJournalServiceImpl implements TravelJournalService {
         }
 
         boolean allExist = true;
-        List<AttractionJournalMetadataDto> temp = travelJournalDto.attractions();
+        List<AttractionJournalMetadataDto> temp = Objects.requireNonNullElse(travelJournalDto.attractions(), List.<AttractionJournalMetadataDto>of());
         for (AttractionJournalMetadataDto a : temp) {
             if (!attractionRepository.existsByName(a.attraction())) {
                 allExist = false;
@@ -97,17 +97,20 @@ public class TravelJournalServiceImpl implements TravelJournalService {
             headers.set("uuid", UUID.randomUUID().toString());
             return ResponseEntity.notFound().headers(headers).build();
         } else {
-            TravelJournal existingTravelJournal = travelJournalRepository.getById(travelJournalId);
+            TravelJournal existingTravelJournal = travelJournalRepository.findById(travelJournalId).orElseThrow();
             TravelJournalDto existingDto = travelJournalMapper.toDto(existingTravelJournal);
 
+            List<AttractionJournalMetadataDto> mergedAttractions = new ArrayList<>(
+                    Objects.requireNonNullElse(existingDto.attractions(), List.of()));
+            mergedAttractions.addAll(
+                    Objects.requireNonNullElse(patchDto.attractions(), List.<AttractionJournalMetadataDto>of()));
 
             TravelJournalDto newDto = new TravelJournalDto(
                     Objects.requireNonNullElse(patchDto.startDate(), existingDto.startDate()),
                     Objects.requireNonNullElse(patchDto.endDate(), existingDto.endDate()),
                     Objects.requireNonNullElse(patchDto.description(), existingDto.description()),
-                    existingDto.attractions()
+                    mergedAttractions
             );
-            newDto.attractions().addAll(patchDto.attractions());
 
             TravelJournal newTravelJournal = travelJournalMapper.toEntity(newDto);
             newTravelJournal.setId(travelJournalId);
@@ -117,6 +120,7 @@ public class TravelJournalServiceImpl implements TravelJournalService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ResponseEntity<TravelJournalDto> getById(Long travelJournalId) {
         if (!travelJournalRepository.existsById(travelJournalId)) {
             HttpHeaders headers = new HttpHeaders();
@@ -126,7 +130,7 @@ public class TravelJournalServiceImpl implements TravelJournalService {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).body(null);
         }
 
-        TravelJournal travelJournal = travelJournalRepository.getById(travelJournalId);
+        TravelJournal travelJournal = travelJournalRepository.findById(travelJournalId).orElseThrow();
         return ResponseEntity.ok(travelJournalMapper.toDto(travelJournal));
     }
 }

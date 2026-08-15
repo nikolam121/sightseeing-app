@@ -25,9 +25,6 @@ public class HttpError {
     @Column
     private String request;
 
-    /*@Column
-    private HttpHeaders headers;*/
-
     public HttpError() {}
 
     public UUID getUuid() {

@@ -63,7 +63,7 @@ public class AttractionBrowseServiceImpl implements AttractionBrowseService {
 
             AttractionMetadata newMetadata = new AttractionMetadata();
             newMetadata.setLocation(location);
-            newMetadata.setAttractions(List.of(attraction));
+            newMetadata.setAttractions(new ArrayList<>(List.of(attraction)));
 
             attractionMetadataRepository.save(newMetadata);
         }

@@ -8,7 +8,6 @@ import hr.tis.academy.sightseeingapp.service.AttractionDetailsService;
 import hr.tis.academy.sightseeingapp.service.AttractionMetadataService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,11 +22,9 @@ import java.util.List;
 @Tag(name = "AttractionMetadataController", description = "AttractionMetadata management")
 @RequestMapping("/attractions")
 public class AttractionMetadataController {
-    @Autowired
-    private AttractionMetadataService attractionMetadataService;
+    private final AttractionMetadataService attractionMetadataService;
 
-    @Autowired
-    private AttractionDetailsService attractionDetailsService;
+    private final AttractionDetailsService attractionDetailsService;
 
     public AttractionMetadataController(AttractionMetadataService attractionMetadataService, AttractionDetailsService attractionDetailsService) {
         this.attractionMetadataService = attractionMetadataService;
@@ -47,7 +44,6 @@ public class AttractionMetadataController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedAttractionMetadataDto);
     }
 
-    //TODO: excludeReviews, reviewsFrom, reviewsTo
     @Operation(summary = "get attraction details by location and attraction URL")
     @GetMapping("/{location}/{attractionURLName}")
     public ResponseEntity<AttractionDetailsDto> attractionDetails(@PathVariable("location") String location,
