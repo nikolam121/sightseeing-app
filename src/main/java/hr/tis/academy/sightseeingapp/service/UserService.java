@@ -3,13 +3,10 @@ package hr.tis.academy.sightseeingapp.service;
 import hr.tis.academy.sightseeingapp.dto.FavouriteDto;
 import hr.tis.academy.sightseeingapp.dto.UserDto;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
-@Component
 public interface UserService {
     ResponseEntity<UserDto> save(String name,
                                  String email,

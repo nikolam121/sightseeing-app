@@ -1,41 +1,42 @@
 <!DOCTYPE html>
-<html lang="hr" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Nova atrakcija</title>
+    <title>New Attraction</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-<h1>Unos nove atrakcije</h1>
+<h1>Add New Attraction</h1>
 
+<p th:if="${successMessage}" th:text="${successMessage}" class="success-message"></p>
 
 <form th:action="@{/browse/attractions/new}" th:object="${attractionForm}" method="post" class="form-attraction">
 
     <div class="form-group">
-        <label for="place" class="form-label">Mjesto</label>
+        <label for="place" class="form-label">Location</label>
         <input type="text" id="place" th:field="*{place}" maxlength="30" class="form-control" />
     </div>
 
     <div class="form-group">
-        <label for="name" class="form-label">Naziv</label>
+        <label for="name" class="form-label">Name</label>
         <input type="text" id="name" th:field="*{name}" maxlength="50" class="form-control" />
     </div>
 
     <div class="form-group">
-        <label for="description" class="form-label">Opis</label>
+        <label for="description" class="form-label">Description</label>
         <textarea id="description" th:field="*{description}" maxlength="250" class="form-control textarea-control"></textarea>
     </div>
 
     <div class="form-group">
-        <label for="type" class="form-label">Tip</label>
+        <label for="type" class="form-label">Type</label>
         <select id="type" th:field="*{type}" class="form-control">
             <option th:each="t : ${types}" th:value="${t}" th:text="${t}"></option>
         </select>
     </div>
 
-    <button type="submit" class="btn btn-submit">Unesi</button>
+    <button type="submit" class="btn btn-submit">Submit</button>
 </form>
 
 </body>

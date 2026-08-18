@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="hr" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Atrakcije</title>
+    <title>Attractions</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
@@ -10,16 +10,16 @@
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
 <div class="attractions">
-    <h1>Pregled atrakcija</h1>
+    <h1>Browse Attractions</h1>
 
     <div th:if="${not #lists.isEmpty(attractions)}" class="attractionsTable">
         <table class="table-attractions">
             <thead>
             <tr>
-                <th>Mjesto</th>
-                <th>Naziv</th>
-                <th>Opis</th>
-                <th>Tip</th>
+                <th>Location</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Type</th>
             </tr>
             </thead>
             <tbody>
@@ -34,7 +34,7 @@
     </div>
 
     <div th:if="${#lists.isEmpty(attractions)}" class="no-data-message">
-        <p>Trenutno nema dostupnih atrakcija u bazi podataka.</p>
+        <p>There are currently no attractions available in the database.</p>
     </div>
 </div>
 

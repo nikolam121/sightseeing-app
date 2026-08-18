@@ -49,7 +49,7 @@ The database is a file-based H2 instance with `ddl-auto=create`, so the schema i
 | `POST` | `/travel-journal/{userId}` | new travel journal |
 | `PATCH` | `/travel-journal/{travelJournalId}` | update a journal |
 
-The details endpoint takes the attraction's **URL name**, meaning without diacritics. For "Dioklecijanova palača" the path is `/attractions/Split/Dioklecijanova%20palaca`.
+The details endpoint takes the attraction's **URL name**, meaning without diacritics. For "Diocletian's Palace" the path is `/attractions/Split/Diocletian's%20Palace`.
 
 The `excludeReviews`, `reviewsFrom`, and `reviewsTo` parameters are also supported for filtering reviews by date range.
 
