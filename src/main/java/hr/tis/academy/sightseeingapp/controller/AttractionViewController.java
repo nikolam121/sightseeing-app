@@ -50,7 +50,7 @@ public class AttractionViewController {
         attractionBrowseService.createAttraction(attractionForm);
 
         model.addAttribute("attractionForm", new NewAttractionFormDto());
-        model.addAttribute("successMessage", "Atrakcija je uspješno unesena.");
+        model.addAttribute("successMessage", "Attraction added successfully.");
         return "attraction/form";
     }
 }

@@ -7,19 +7,19 @@ INSERT INTO SIGHTSEEING.ATTRACTION_METADATA (id, location_id) VALUES (2, 2);
 INSERT INTO SIGHTSEEING.ATTRACTION_METADATA (id, location_id) VALUES (3, 3);
 
 INSERT INTO SIGHTSEEING.ATTRACTION (id, name, description, type, attraction_id)
-VALUES (1, 'Muzej Mimara', 'Umjetnički muzej u Zagrebu', 'MUZEJ', 1);
+VALUES (1, 'Mimara Museum', 'Art museum in Zagreb', 'MUSEUM', 1);
 
 INSERT INTO SIGHTSEEING.ATTRACTION (id, name, description, type, attraction_id)
-VALUES (2, 'Trg bana Josipa Jelačića', 'Glavni zagrebački trg', 'ULICA', 1);
+VALUES (2, 'Ban Jelacic Square', 'Zagreb''s main square', 'STREET', 1);
 
 INSERT INTO SIGHTSEEING.ATTRACTION (id, name, description, type, attraction_id)
-VALUES (3, 'Park Maksimir', 'Veliki park na istoku Zagreba, mjesto za opuštanje', 'PARK', 1);
+VALUES (3, 'Maksimir Park', 'Large park in eastern Zagreb, a place to relax', 'PARK', 1);
 
 INSERT INTO SIGHTSEEING.ATTRACTION (id, name, description, type, attraction_id)
-VALUES (4, 'Dioklecijanova palača', 'Ostaci rimske palače u centru Splita', 'MUZEJ', 2);
+VALUES (4, 'Diocletian''s Palace', 'Remains of a Roman palace in the center of Split', 'MUSEUM', 2);
 
 INSERT INTO SIGHTSEEING.ATTRACTION (id, name, description, type, attraction_id)
-VALUES (5, 'Zadarske orgulje', 'Morske orgulje na zadarskoj rivi', 'ULICA', 3);
+VALUES (5, 'Sea Organ', 'Sea organ on the Zadar waterfront', 'STREET', 3);
 
 ALTER TABLE SIGHTSEEING.LOCATION ALTER COLUMN ID RESTART WITH 100;
 ALTER TABLE SIGHTSEEING.ATTRACTION_METADATA ALTER COLUMN ID RESTART WITH 100;
