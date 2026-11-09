@@ -17,6 +17,8 @@ Built during the TIS Academy Spring workshop 2026 as a team project (team Mljet)
 
 ## Running
 
+Requires JDK 25.
+
 ```bash
 ./mvnw spring-boot:run
 ```
@@ -56,3 +58,11 @@ The `excludeReviews`, `reviewsFrom`, and `reviewsTo` parameters are also support
 ## Error handling
 
 All exceptions go through a `@ControllerAdvice`. Missing records return 404 with a message, invalid input returns 400, and unexpected errors return 500 with a reference id that's logged.
+
+## Tests
+
+```bash
+./mvnw test
+```
+
+The tests check that the application context starts and that attraction URL names strip diacritics.
